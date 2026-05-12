@@ -29,3 +29,323 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+/* ── GENERAL PAGE STYLES ── */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+    background: linear-gradient(135deg, #1a3c6e, #2e74b5) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 12px 20px;
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    color: #d0e4f7 !important;
+    font-weight: 500;
+    margin: 0 6px;
+    transition: color 0.2s;
+}
+
+    .nav-link:hover {
+        color: #ffffff !important;
+    }
+
+/* ── PAGE TITLES ── */
+h1 {
+    color: #1a3c6e;
+    font-weight: 700;
+    margin-bottom: 24px;
+    border-bottom: 3px solid #2e74b5;
+    padding-bottom: 10px;
+}
+
+h2, h3, h4 {
+    color: #1a3c6e;
+}
+
+/* ── BOOKS INDEX TABLE ── */
+.table {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+    .table thead {
+        background: linear-gradient(135deg, #1a3c6e, #2e74b5);
+        color: white;
+    }
+
+        .table thead th {
+            color: #ffffff !important;
+            font-weight: 600;
+            border: none;
+            padding: 14px 16px;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            background: #1a3c6e;
+        }
+
+    .table tbody tr {
+        transition: background-color 0.2s;
+        border-bottom: 1px solid #e8ecf0;
+    }
+
+        .table tbody tr:hover {
+            background-color: #eaf3fb;
+        }
+
+    .table tbody td {
+        padding: 12px 16px;
+        vertical-align: middle;
+        font-size: 0.92rem;
+    }
+
+/* ── AVAILABILITY BADGE ── */
+.badge-available {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-unavailable {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+    background: linear-gradient(135deg, #1a3c6e, #2e74b5);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+    .btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    color: white;
+}
+
+/* ── FORMS (Create / Edit) ── */
+.form-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #1a3c6e;
+    margin-bottom: 4px;
+}
+
+.form-control {
+    border: 1.5px solid #d0d8e4;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.93rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-control:focus {
+        border-color: #2e74b5;
+        box-shadow: 0 0 0 3px rgba(46,116,181,0.15);
+        outline: none;
+    }
+
+.text-danger {
+    font-size: 0.82rem;
+    margin-top: 3px;
+}
+
+/* ── DETAILS PAGE ── */
+.details-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+    .details-container dt {
+        color: #2e74b5;
+        font-weight: 700;
+        font-size: 0.88rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .details-container dd {
+        color: #333;
+        margin-bottom: 16px;
+        font-size: 0.95rem;
+    }
+
+/* ── DELETE PAGE ── */
+.delete-container {
+    background: #fff5f5;
+    border: 2px solid #f5c6cb;
+    border-radius: 12px;
+    padding: 36px 40px;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* ── CREATE NEW LINK ── */
+.create-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a3c6e, #2e74b5);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: opacity 0.2s;
+}
+
+    .create-link:hover {
+        opacity: 0.85;
+        color: white !important;
+    }
+
+/* ── FOOTER ── */
+.footer {
+    background: #1a3c6e;
+    color: #a0b8d8;
+    padding: 16px 0;
+    text-align: center;
+    font-size: 0.88rem;
+    margin-top: 60px;
+}
+/* ── BROWSE GRID ── */
+.browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.book-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+    }
+
+.book-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.book-cover-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #eaf3fb, #d0e4f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.book-card-body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a3c6e;
+    margin-bottom: 4px;
+}
+
+.book-author {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.book-genre {
+    display: inline-block;
+    background: #eaf3fb;
+    color: #2e74b5;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.book-status {
+    margin-bottom: 8px;
+}
+
+.book-description {
+    font-size: 0.82rem;
+    color: #777;
+    line-height: 1.5;
+    flex: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

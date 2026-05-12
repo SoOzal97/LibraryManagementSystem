@@ -1,0 +1,73 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Book>
+
+@{
+    ViewData["Title"] = "Search Books";
+}
+
+<h1>Search Books</h1>
+
+<div class="form-container" style="margin-bottom:30px;">
+    <form asp-action="Search" method="get">
+        <div class="d-flex gap-2">
+            <input type="text" name="query" value="@ViewData["SearchQuery"]"
+                   class="form-control" placeholder="Search by title, author or genre..." />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a asp-action="Index" class="btn btn-secondary">Clear</a>
+        </div>
+    </form>
+</div>
+
+@if (ViewData["SearchQuery"] != null)
+{
+    <p class="text-muted">
+        Showing results for: <strong>"@ViewData["SearchQuery"]"</strong>
+        — @Model.Count() result(s) found
+    </p>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            No books found matching your search. Try a different keyword.
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>ISBN</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Author</td>
+                        <td>@item.Genre</td>
+                        <td>@item.ISBN</td>
+                        <td>
+                            @if (item.IsAvailable)
+                            {
+                                <span class="badge-available">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge-unavailable">Unavailable</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-info btn-sm">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-warning btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

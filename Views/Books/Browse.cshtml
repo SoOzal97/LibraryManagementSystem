@@ -1,0 +1,79 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Book>
+
+@{
+    ViewData["Title"] = "Browse Books";
+    var genres = ViewData["Genres"] as List<string> ?? new List<string>();
+    var selectedGenre = ViewData["SelectedGenre"] as string;
+}
+
+<h1>Browse Books</h1>
+
+<!-- FILTER BY GENRE -->
+<div class="form-container" style="margin-bottom:30px;">
+    <form asp-action="Browse" method="get">
+        <div class="d-flex gap-2 align-items-center">
+            <label class="form-label mb-0 fw-bold">Filter by Genre:</label>
+            <select name="genre" class="form-control" style="max-width:220px;">
+                <option value="">-- All Genres --</option>
+                @foreach (var genre in genres)
+                {
+                    if (genre == selectedGenre)
+                    {
+                        <option value="@genre" selected>@genre</option>
+                    }
+                    else
+                    {
+                        <option value="@genre">@genre</option>
+                    }
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="Browse" class="btn btn-secondary">Clear</a>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No books found for this genre.
+    </div>
+}
+else
+{
+    <div class="browse-grid">
+        @foreach (var item in Model)
+        {
+            <div class="book-card">
+                @if (!string.IsNullOrEmpty(item.CoverImagePath))
+                {
+                    <img src="@item.CoverImagePath" alt="@item.Title" class="book-cover" />
+                }
+                else
+                {
+                    <div class="book-cover-placeholder">📚</div>
+                }
+                <div class="book-card-body">
+                    <h3 class="book-title">@item.Title</h3>
+                    <p class="book-author">by @item.Author</p>
+                    <span class="book-genre">@item.Genre</span>
+                    <div class="book-status">
+                        @if (item.IsAvailable)
+                        {
+                            <span class="badge-available">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge-unavailable">Unavailable</span>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(item.Description))
+                    {
+                        <p class="book-description">@item.Description</p>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-primary btn-sm mt-2">View Details</a>
+                </div>
+            </div>
+        }
+    </div>
+}
