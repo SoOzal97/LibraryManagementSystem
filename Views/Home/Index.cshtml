@@ -1,8 +1,203 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LibraryManagemenytSystem.Models.ApplicationUser> SignInManager
+@inject UserManager<LibraryManagemenytSystem.Models.ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- HERO -->
+<div class="lms-hero">
+    <div class="lms-hero-left">
+        <div class="lms-hero-tag">📚 KOI Library System</div>
+        <h1 class="lms-hero-title">Manage, Borrow &<br /><span class="lms-hero-accent">Discover Books</span></h1>
+        <p class="lms-hero-sub">A complete library management platform for librarians and members. Browse the catalogue, borrow books online, and track your reading history.</p>
+        <div class="lms-hero-btns">
+            <a asp-controller="Books" asp-action="Browse" class="lms-btn-solid">Browse Books</a>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a asp-controller="Account" asp-action="Register" class="lms-btn-outline">Join Now</a>
+            }
+        </div>
+    </div>
+    <div class="lms-hero-right">
+        <div class="lms-mini-stat">
+            <div class="lms-mini-num">@ViewData["TotalBooks"]</div>
+            <div class="lms-mini-label">📚 Total Books</div>
+        </div>
+        <div class="lms-mini-stat">
+            <div class="lms-mini-num">4</div>
+            <div class="lms-mini-label">👥 Team Members</div>
+        </div>
+        <div class="lms-mini-stat">
+            <div class="lms-mini-num">@ViewData["TotalTransactions"]</div>
+            <div class="lms-mini-label">🔄 Borrowings</div>
+        </div>
+        <div class="lms-mini-stat">
+            <div class="lms-mini-num">@ViewData["TotalFeedback"]</div>
+            <div class="lms-mini-label">⭐ Reviews</div>
+        </div>
+    </div>
+</div>
+
+<!-- NEW ARRIVALS -->
+<div class="lms-section">
+    <div class="lms-section-bar">
+        <div>
+            <div class="lms-section-title">New Arrivals</div>
+            <div class="lms-section-sub">Recently added to our collection</div>
+        </div>
+        <a asp-controller="Books" asp-action="Browse" class="lms-see-all">See All →</a>
+    </div>
+    <div class="lms-books-grid">
+        @if (ViewData["NewArrivals"] != null)
+        {
+            foreach (var book in (IEnumerable<LibraryManagemenytSystem.Models.Book>)ViewData["NewArrivals"]!)
+            {
+                <div class="lms-book-card">
+                    @if (!string.IsNullOrEmpty(book.CoverImagePath))
+                    {
+                        <img src="@book.CoverImagePath" alt="@book.Title" class="lms-book-img" />
+                    }
+                    else
+                    {
+                        <div class="lms-book-placeholder">📚</div>
+                    }
+                    <div class="lms-book-body">
+                        <span class="lms-genre-tag">@book.Genre</span>
+                        <div class="lms-book-title">@book.Title</div>
+                        <div class="lms-book-author">by @book.Author</div>
+                        <div class="lms-book-footer">
+                            @if (book.IsAvailable)
+                            {
+                                <span class="lms-avail-yes">Available</span>
+                            }
+                            else
+                            {
+                                <span class="lms-avail-no">Unavailable</span>
+                            }
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.BookId" class="lms-detail-btn">Details →</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<!-- MOST BORROWED -->
+<div class="lms-section lms-section-alt">
+    <div class="lms-section-bar">
+        <div>
+            <div class="lms-section-title">Most Borrowed</div>
+            <div class="lms-section-sub">Most popular books in our library</div>
+        </div>
+        <a asp-controller="Books" asp-action="Browse" class="lms-see-all">See All →</a>
+    </div>
+    <div class="lms-books-grid">
+        @if (ViewData["MostBorrowed"] != null)
+        {
+            foreach (var book in (IEnumerable<LibraryManagemenytSystem.Models.Book>)ViewData["MostBorrowed"]!)
+            {
+                <div class="lms-book-card">
+                    @if (!string.IsNullOrEmpty(book.CoverImagePath))
+                    {
+                        <img src="@book.CoverImagePath" alt="@book.Title" class="lms-book-img" />
+                    }
+                    else
+                    {
+                        <div class="lms-book-placeholder">📖</div>
+                    }
+                    <div class="lms-book-body">
+                        <span class="lms-genre-tag">@book.Genre</span>
+                        <div class="lms-book-title">@book.Title</div>
+                        <div class="lms-book-author">by @book.Author</div>
+                        <div class="lms-book-footer">
+                            @if (book.IsAvailable)
+                            {
+                                <span class="lms-avail-yes">Available</span>
+                            }
+                            else
+                            {
+                                <span class="lms-avail-no">Unavailable</span>
+                            }
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.BookId" class="lms-detail-btn">Details →</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="lms-section">
+    <div class="lms-section-bar">
+        <div>
+            <div class="lms-section-title">What You Can Do</div>
+            <div class="lms-section-sub">Everything you need in one platform</div>
+        </div>
+    </div>
+    <div class="lms-features-grid">
+        <div class="lms-feature">
+            <div class="lms-feat-icon">📋</div>
+            <div class="lms-feat-title">Manage Books</div>
+            <div class="lms-feat-desc">Add, edit, and manage the full catalogue with titles, authors, genres and ISBN numbers.</div>
+            <a asp-controller="Books" asp-action="Index" class="lms-feat-link">Go to Books →</a>
+        </div>
+        <div class="lms-feature">
+            <div class="lms-feat-icon">🔄</div>
+            <div class="lms-feat-title">Borrow & Return</div>
+            <div class="lms-feat-desc">Borrow books online, track due dates, manage renewals and pay fines easily.</div>
+            <a asp-controller="Books" asp-action="Browse" class="lms-feat-link">Browse Books →</a>
+        </div>
+        <div class="lms-feature">
+            <div class="lms-feat-icon">🔍</div>
+            <div class="lms-feat-title">Search & Browse</div>
+            <div class="lms-feat-desc">Search by title, author, or genre and filter by category instantly.</div>
+            <a asp-controller="Books" asp-action="Search" class="lms-feat-link">Search Now →</a>
+        </div>
+        <div class="lms-feature">
+            <div class="lms-feat-icon">⭐</div>
+            <div class="lms-feat-title">Reviews & Ratings</div>
+            <div class="lms-feat-desc">Leave feedback and star ratings for books you have read and help other members.</div>
+            <a asp-controller="Books" asp-action="Browse" class="lms-feat-link">Browse →</a>
+        </div>
+    </div>
+</div>
+
+<!-- GROUP TABLE -->
+<div class="lms-section lms-section-alt">
+    <div class="lms-section-bar">
+        <div>
+            <div class="lms-section-title">Project Group Details</div>
+            <div class="lms-section-sub">Assignment 3A — Library Management System</div>
+        </div>
+    </div>
+    <div class="lms-members-grid">
+        <div class="lms-member-card">
+            <div class="lms-member-avatar">M1</div>
+            <div class="lms-member-name">Sampanna Dhakal</div>
+            <div class="lms-member-id">20032970</div>
+            <span class="lms-member-role">🔐 Authentication</span>
+        </div>
+        <div class="lms-member-card">
+            <div class="lms-member-avatar">M2</div>
+            <div class="lms-member-name">Sujal Shrestha</div>
+            <div class="lms-member-id">20031810</div>
+            <span class="lms-member-role">📚Book Management & Integration</span>
+        </div>
+        <div class="lms-member-card">
+            <div class="lms-member-avatar">M3</div>
+            <div class="lms-member-name">Sameer Shakya</div>
+            <div class="lms-member-id">20031779</div>
+            <span class="lms-member-role">🔄 Borrowing System</span>
+        </div>
+        <div class="lms-member-card">
+            <div class="lms-member-avatar">M4</div>
+            <div class="lms-member-name"> Pravin Khanal </div>
+            <div class="lms-member-id">20033403</div>
+            <span class="lms-member-role">⭐ Reports & Homepage</span>
+        </div>
+    </div>
 </div>

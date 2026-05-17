@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LibraryManagementSystem.Models;
+using LibraryManagemenytSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagemenytSystem.Controllers
 {
@@ -37,6 +38,7 @@ namespace LibraryManagemenytSystem.Controllers
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Librarian")]
         public IActionResult Create()
         {
             return View();
@@ -45,9 +47,11 @@ namespace LibraryManagemenytSystem.Controllers
         // POST: Books/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookId,Title,Author,Genre,ISBN,IsAvailable,Description,CoverImagePath,DateAdded")] Book book, IFormFile? coverImage)
+        [Authorize(Roles = "Librarian")]
+        public async Task<IActionResult> Create([Bind("BookId,Title,Author,Genre,ISBN,IsAvailable,Description,CoverImagePath,DateAdded,TotalCopies")] Book book, IFormFile? coverImage)
         {
             book.DateAdded = DateTime.Now;
+            book.AvailableCopies = book.TotalCopies;
 
             if (coverImage != null && coverImage.Length > 0)
             {
@@ -76,6 +80,7 @@ namespace LibraryManagemenytSystem.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "Librarian")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -89,7 +94,8 @@ namespace LibraryManagemenytSystem.Controllers
         // POST: Books/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookId,Title,Author,Genre,ISBN,IsAvailable,Description,CoverImagePath,DateAdded")] Book book, IFormFile? coverImage)
+        [Authorize(Roles = "Librarian")]
+        public async Task<IActionResult> Edit(int id, [Bind("BookId,Title,Author,Genre,ISBN,IsAvailable,Description,CoverImagePath,DateAdded,TotalCopies,AvailableCopies")] Book book, IFormFile? coverImage)
         {
             if (id != book.BookId) return NotFound();
 
@@ -106,7 +112,6 @@ namespace LibraryManagemenytSystem.Controllers
                 {
                     await coverImage.CopyToAsync(stream);
                 }
-
                 book.CoverImagePath = "/uploads/" + uniqueFileName;
             }
 
@@ -114,6 +119,26 @@ namespace LibraryManagemenytSystem.Controllers
             {
                 try
                 {
+                    // Get existing book to compare copies
+                    var existingBook = await _context.Books.AsNoTracking()
+                        .FirstOrDefaultAsync(b => b.BookId == id);
+
+                    if (existingBook != null)
+                    {
+                        // Calculate difference in total copies
+                        int copyDifference = book.TotalCopies - existingBook.TotalCopies;
+
+                        // Adjust available copies accordingly
+                        book.AvailableCopies = existingBook.AvailableCopies + copyDifference;
+
+                        // Make sure AvailableCopies doesn't go below 0 or above TotalCopies
+                        book.AvailableCopies = Math.Max(0, book.AvailableCopies);
+                        book.AvailableCopies = Math.Min(book.TotalCopies, book.AvailableCopies);
+
+                        // Update availability status
+                        book.IsAvailable = book.AvailableCopies > 0;
+                    }
+
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
@@ -128,6 +153,7 @@ namespace LibraryManagemenytSystem.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Librarian")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -142,6 +168,7 @@ namespace LibraryManagemenytSystem.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Librarian")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = await _context.Books.FindAsync(id);

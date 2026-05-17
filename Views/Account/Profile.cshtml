@@ -1,0 +1,26 @@
+﻿@model LibraryManagemenytSystem.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h1>My Profile</h1>
+
+<div class="details-container">
+    <dl class="row">
+        <dt class="col-sm-3">Full Name</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Role</dt>
+        <dd class="col-sm-9">@Model.UserRole</dd>
+
+        <dt class="col-sm-3">Date Joined</dt>
+        <dd class="col-sm-9">@Model.DateJoined.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9">@(Model.Address ?? "Not provided")</dd>
+    </dl>
+</div>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LibraryManagementSystem.Models.Book>
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.Book>
 
 @{
     ViewData["Title"] = "Browse Books";
@@ -72,6 +72,18 @@ else
                         <p class="book-description">@item.Description</p>
                     }
                     <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-primary btn-sm mt-2">View Details</a>
+
+                        @if (User.Identity!.IsAuthenticated && !User.IsInRole("Librarian"))
+                        {
+                            <form asp-controller="Borrowing" asp-action="Borrow" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="bookId" value="@item.BookId" />
+                                <button type="submit" class="btn btn-success btn-sm mt-2"
+                                    @(item.IsAvailable ? "" : "disabled")>
+                                    @(item.IsAvailable ? "🔖 Borrow" : "Unavailable")
+                                </button>
+                            </form>
+                        }
                 </div>
             </div>
         }

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.BorrowingTransaction>
+
+@{
+    ViewData["Title"] = "Borrowing History";
+}
+
+<h1>Borrowing History</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No borrowing history found.</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine Paid</th>
+                <th>Renewals</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Book?.Title</strong></td>
+                    <td>@item.BorrowDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.ReturnDate.HasValue ? item.ReturnDate.Value.ToString("dd/MM/yyyy") : "-")</td>
+                    <td>
+                        @if (item.FineAmount > 0)
+                        {
+                            <span class="text-danger">$@item.FineAmount.ToString("F2")</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">$0.00</span>
+                        }
+                    </td>
+                    <td>@item.RenewedCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="MyBorrowings" class="btn btn-primary">Back to My Borrowings</a>

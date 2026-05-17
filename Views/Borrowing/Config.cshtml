@@ -1,0 +1,55 @@
+﻿@model LibraryManagemenytSystem.Models.BorrowingConfig
+
+@{
+    ViewData["Title"] = "Borrowing Configuration";
+}
+
+<h1>Borrowing Configuration</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="form-container">
+    <form asp-action="Config" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="LoanDurationDays" class="form-label"></label>
+            <input asp-for="LoanDurationDays" class="form-control" />
+            <span asp-validation-for="LoanDurationDays" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RenewalLimit" class="form-label"></label>
+            <input asp-for="RenewalLimit" class="form-control" />
+            <span asp-validation-for="RenewalLimit" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="OverduePenaltyPerDay" class="form-label"></label>
+            <input asp-for="OverduePenaltyPerDay" class="form-control" />
+            <span asp-validation-for="OverduePenaltyPerDay" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MaxBorrowableItems" class="form-label"></label>
+            <input asp-for="MaxBorrowableItems" class="form-control" />
+            <span asp-validation-for="MaxBorrowableItems" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <input type="submit" value="Save Configuration" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

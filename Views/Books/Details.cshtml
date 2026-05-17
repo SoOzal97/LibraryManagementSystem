@@ -1,4 +1,4 @@
-@model LibraryManagementSystem.Models.Book
+@model LibraryManagemenytSystem.Models.Book
 
 @{
     ViewData["Title"] = "Details";
@@ -63,4 +63,10 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.BookId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    @if (User.Identity != null && User.Identity.IsAuthenticated && !User.IsInRole("Librarian"))
+    {
+        <a asp-controller="Feedback" asp-action="Create" asp-route-bookId="@Model.BookId" class="btn btn-warning">Leave a Review</a>
+    }
+    <a asp-controller="Feedback" asp-action="BookFeedback" asp-route-bookId="@Model.BookId" class="btn btn-info">View Reviews</a>
+
 </div>

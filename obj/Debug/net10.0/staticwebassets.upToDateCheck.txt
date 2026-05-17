@@ -61,6 +61,13 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\uploads\08f7adaa-d14a-4c95-b42c-b809031d7cea.jpg
+wwwroot\uploads\303c9029-6975-42fa-be9d-6f560f1b4c41.jpg
+wwwroot\uploads\9843fd67-f51d-44d0-8c6a-1c54601e2773.jpg
+wwwroot\uploads\a56c27ef-9b99-4df4-bcdc-e2669b18b637.webp
+wwwroot\uploads\d267ec69-0ac6-4b60-a273-c1b4483f3974.jpg
+wwwroot\uploads\d713f873-e8a2-4ab1-8cbe-4623cb69ff35.jpg
+wwwroot\uploads\ff89407c-8f0b-44ee-a412-82ef6bc3b86d.jpg
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\css\site.css
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\favicon.ico
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\js\site.js

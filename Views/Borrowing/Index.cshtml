@@ -1,0 +1,73 @@
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.BorrowingTransaction>
+
+@{
+    ViewData["Title"] = "All Borrowing Transactions";
+}
+
+<h1>All Borrowing Transactions</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Member</th>
+            <th>Book</th>
+            <th>Borrow Date</th>
+            <th>Due Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+            <th>Fine</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User?.FullName</td>
+                <td>@item.Book?.Title</td>
+                <td>@item.BorrowDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @(item.ReturnDate.HasValue
+                        ? item.ReturnDate.Value.ToString("dd/MM/yyyy")
+                        : "Not Returned")
+                </td>
+                <td>
+                    @if (item.Status == "Returned")
+                    {
+                        <span class="badge-available">Returned</span>
+                    }
+                    else if (DateTime.Now > item.DueDate)
+                    {
+                        <span class="badge-unavailable">Overdue</span>
+                    }
+                    else if (item.Status == "Renewed")
+                    {
+                        <span style="background:#fff3cd;color:#856404;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">Renewed</span>
+                    }
+                    else
+                    {
+                        <span style="background:#cce5ff;color:#004085;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">Borrowed</span>
+                    }
+                </td>
+                <td>
+                    @if (item.FineAmount > 0)
+                    {
+                        <span class="text-danger fw-bold">$@item.FineAmount.ToString("F2")</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">$0.00</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

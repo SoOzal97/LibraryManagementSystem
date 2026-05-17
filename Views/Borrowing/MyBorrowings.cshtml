@@ -1,0 +1,106 @@
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.BorrowingTransaction>
+
+@{
+    ViewData["Title"] = "My Borrowings";
+}
+
+<h1>My Borrowings</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You have no active borrowings. <a asp-controller="Books" asp-action="Browse">Browse books</a> to borrow one!
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Fine</th>
+                <th>Renewals</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Book?.Title</strong></td>
+                    <td>@item.BorrowDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @item.DueDate.ToString("dd/MM/yyyy")
+                        @if (DateTime.Now > item.DueDate && item.Status != "Returned")
+                        {
+                            <span class="text-danger"> ⚠️ Overdue!</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Status == "Returned")
+                        {
+                            <span class="badge-available">Returned</span>
+                        }
+                        else if (DateTime.Now > item.DueDate)
+                        {
+                            <span class="badge-unavailable">Overdue</span>
+                        }
+                        else if (item.Status == "Renewed")
+                        {
+                            <span style="background:#fff3cd;color:#856404;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">Renewed</span>
+                        }
+                        else
+                        {
+                            <span style="background:#cce5ff;color:#004085;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">Borrowed</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.FineAmount > 0)
+                        {
+                            <span class="text-danger fw-bold">$@item.FineAmount.ToString("F2")</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">$0.00</span>
+                        }
+                    </td>
+                    <td>@item.RenewedCount</td>
+                    <td>
+                        @if (item.Status != "Returned")
+                        {
+                            <form asp-action="Return" method="post" style="display:inline;">
+                                <input type="hidden" name="transactionId" value="@item.TransactionId" />
+                                <button type="submit" class="btn btn-success btn-sm">Return</button>
+                            </form>
+                            <form asp-action="Renew" method="post" style="display:inline;">
+                                <input type="hidden" name="transactionId" value="@item.TransactionId" />
+                                <button type="submit" class="btn btn-warning btn-sm">Renew</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="History" class="btn btn-secondary mt-3">View Borrowing History</a>

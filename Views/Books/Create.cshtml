@@ -1,4 +1,4 @@
-@model LibraryManagementSystem.Models.Book
+@model LibraryManagemenytSystem.Models.Book
 
 @{
     ViewData["Title"] = "Add New Book";
@@ -55,6 +55,14 @@
             <input asp-for="DateAdded" class="form-control" type="date" />
             <span asp-validation-for="DateAdded" class="text-danger"></span>
         </div>
+        <div class="mb-3">
+            <label asp-for="TotalCopies" class="form-label"></label>
+            <input asp-for="TotalCopies" class="form-control" type="number" min="1" max="10" />
+            <span asp-validation-for="TotalCopies" class="text-danger"></span>
+            <small class="text-muted">Maximum 10 copies per book</small>
+        </div>
+
+        <input type="hidden" asp-for="AvailableCopies" />
 
         <div class="d-flex gap-2">
             <input type="submit" value="Create Book" class="btn btn-primary" />

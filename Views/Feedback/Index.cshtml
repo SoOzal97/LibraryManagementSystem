@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.Feedback>
+
+@{
+    ViewData["Title"] = "Manage Feedback";
+}
+
+<h1>Manage Feedback</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No feedback submitted yet.</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Book?.Title</strong></td>
+                    <td>@item.User?.FullName</td>
+                    <td>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <span style="color:@(i <= item.Rating ? "#f5a623" : "#ddd")">★</span>
+                        }
+                        (@item.Rating/5)
+                    </td>
+                    <td>@item.Comment</td>
+                    <td>@item.DateSubmitted.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="feedbackId" value="@item.FeedbackId" />
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this feedback?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

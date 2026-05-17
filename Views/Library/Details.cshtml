@@ -1,0 +1,47 @@
+﻿@model LibraryManagemenytSystem.Models.Library
+
+@{
+    ViewData["Title"] = "Library Details";
+}
+
+<h1>Library Details</h1>
+
+<div class="details-container">
+    <dl class="row">
+        <dt class="col-sm-3">Library Name</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Location</dt>
+        <dd class="col-sm-9">@Model.Location</dd>
+
+        <dt class="col-sm-3">Operating Hours</dt>
+        <dd class="col-sm-9">@Model.OperatingHours</dd>
+
+        <dt class="col-sm-3">Contact Details</dt>
+        <dd class="col-sm-9">@Model.ContactDetails</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Phone Number</dt>
+        <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-3">Website</dt>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.Website))
+            {
+                <a href="@Model.Website" target="_blank">@Model.Website</a>
+            }
+        </dd>
+
+        <dt class="col-sm-3">Date Established</dt>
+        <dd class="col-sm-9">@Model.DateEstablished?.ToString("dd/MM/yyyy")</dd>
+    </dl>
+
+    @if (User.IsInRole("Librarian"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.LibraryId" class="btn btn-warning">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.LibraryId" class="btn btn-danger">Delete</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

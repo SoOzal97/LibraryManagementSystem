@@ -1,0 +1,43 @@
+﻿@model IEnumerable<LibraryManagemenytSystem.Models.Library>
+
+@{
+    ViewData["Title"] = "Library Profiles";
+}
+
+<h1>Library Profiles</h1>
+
+@if (User.IsInRole("Librarian"))
+{
+    <a asp-action="Create" class="create-link">+ Add Library</a>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Library Name</th>
+            <th>Location</th>
+            <th>Operating Hours</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><strong>@item.Name</strong></td>
+                <td>@item.Location</td>
+                <td>@item.OperatingHours</td>
+                <td>@item.ContactDetails</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.LibraryId" class="btn btn-info btn-sm">Details</a>
+                    @if (User.IsInRole("Librarian"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.LibraryId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.LibraryId" class="btn btn-danger btn-sm">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,14 +1,16 @@
-@model IEnumerable<LibraryManagementSystem.Models.Book>
+@model IEnumerable<LibraryManagemenytSystem.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
+<h1>Book Management</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Librarian"))
+{
+    <a asp-action="Create" class="create-link">+ Create New Book</a>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -16,7 +18,9 @@
             <th>@Html.DisplayNameFor(model => model.Author)</th>
             <th>@Html.DisplayNameFor(model => model.Genre)</th>
             <th>@Html.DisplayNameFor(model => model.ISBN)</th>
-            <th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
+            <th>Total Copies</th>
+            <th>Available Copies</th>
+            <th>Status</th>
             <th>@Html.DisplayNameFor(model => model.Description)</th>
             <th>@Html.DisplayNameFor(model => model.DateAdded)</th>
             <th>Actions</th>
@@ -30,13 +34,29 @@
                 <td>@Html.DisplayFor(modelItem => item.Author)</td>
                 <td>@Html.DisplayFor(modelItem => item.Genre)</td>
                 <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsAvailable)</td>
+                <td>@item.TotalCopies</td>
+                <td>
+                    <strong>@item.AvailableCopies</strong> / @item.TotalCopies
+                </td>
+                <td>
+                    @if (item.AvailableCopies > 0)
+                    {
+                        <span class="badge-available">Available</span>
+                    }
+                    else
+                    {
+                        <span class="badge-unavailable">All Borrowed</span>
+                    }
+                </td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-warning btn-sm">Edit</a>
                     <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-info btn-sm">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger btn-sm">Delete</a>
+                    @if (User.IsInRole("Librarian"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger btn-sm">Delete</a>
+                    }
                 </td>
             </tr>
         }

@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Library Reports";
+    var overdueBooks = ViewData["OverdueBooks"] as List<LibraryManagemenytSystem.Models.BorrowingTransaction>;
+}
+
+<h1>📊 Library Reports</h1>
+
+<!-- STATS CARDS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <div class="report-stat-card">
+            <div class="report-stat-icon">📚</div>
+            <div class="report-stat-number">@ViewData["TotalBooks"]</div>
+            <div class="report-stat-label">Total Books</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="report-stat-card">
+            <div class="report-stat-icon">✅</div>
+            <div class="report-stat-number">@ViewData["AvailableBooks"]</div>
+            <div class="report-stat-label">Available Books</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="report-stat-card">
+            <div class="report-stat-icon">🔄</div>
+            <div class="report-stat-number">@ViewData["TotalTransactions"]</div>
+            <div class="report-stat-label">Transactions</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="report-stat-card">
+            <div class="report-stat-icon">💰</div>
+            <div class="report-stat-number">$@ViewData["TotalFines"]</div>
+            <div class="report-stat-label">Fines Collected</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="report-stat-card">
+            <div class="report-stat-icon">⭐</div>
+            <div class="report-stat-number">@ViewData["TotalFeedback"]</div>
+            <div class="report-stat-label">Total Feedback</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- OVERDUE BOOKS -->
+    <div class="col-md-12">
+        <div class="report-section">
+            <h2>⚠️ Overdue Books</h2>
+            @if (overdueBooks == null || !overdueBooks.Any())
+            {
+                <div class="alert alert-success">No overdue books! 🎉</div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Member</th>
+                            <th>Due Date</th>
+                            <th>Days Overdue</th>
+                            <th>Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in overdueBooks)
+                        {
+                            var daysOverdue = (DateTime.Now - item.DueDate).Days;
+                            <tr>
+                                <td><strong>@item.Book?.Title</strong></td>
+                                <td>@item.User?.FullName</td>
+                                <td class="text-danger">@item.DueDate.ToString("dd/MM/yyyy")</td>
+                                <td><span class="badge-unavailable">@daysOverdue days</span></td>
+                                <td class="text-danger fw-bold">$@item.FineAmount.ToString("F2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    <!-- MOST POPULAR BOOKS -->
+    <div class="col-md-6">
+        <div class="report-section">
+            <h2>🏆 Most Popular Books</h2>
+            @if (ViewData["PopularBooks"] != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Book Title</th>
+                            <th>Times Borrowed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rank = 1;
+                        }
+                        @foreach (var item in (dynamic)ViewData["PopularBooks"]!)
+                        {
+                            <tr>
+                                <td><strong>@rank</strong></td>
+                                <td>@item.Title</td>
+                                <td><span class="badge-available">@item.Count times</span></td>
+                            </tr>
+                            rank++;
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    <!-- MOST ACTIVE MEMBERS -->
+    <div class="col-md-6">
+        <div class="report-section">
+            <h2>👥 Most Active Members</h2>
+            @if (ViewData["ActiveMembers"] != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Member Name</th>
+                            <th>Total Borrowings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int memberRank = 1;
+                        }
+                        @foreach (var item in (dynamic)ViewData["ActiveMembers"]!)
+                        {
+                            <tr>
+                                <td><strong>@memberRank</strong></td>
+                                <td>@item.Name</td>
+                                <td><span class="badge-available">@item.Count books</span></td>
+                            </tr>
+                            memberRank++;
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    <!-- BORROWING TRENDS -->
+    <div class="col-md-12">
+        <div class="report-section">
+            <h2>📈 Borrowing Trends (Last 7 Days)</h2>
+            @if (ViewData["Last7Days"] != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Books Borrowed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (dynamic)ViewData["Last7Days"]!)
+                        {
+                            <tr>
+                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span style="background:#cce5ff;color:#004085;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">
+                                        @item.Count borrowings
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
