@@ -53,6 +53,10 @@ namespace LibraryManagemenytSystem.Controllers
             book.DateAdded = DateTime.Now;
             book.AvailableCopies = book.TotalCopies;
 
+            // If 0 copies, force unavailable
+            if (book.TotalCopies == 0)
+                book.IsAvailable = false;
+
             if (coverImage != null && coverImage.Length > 0)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
@@ -135,8 +139,10 @@ namespace LibraryManagemenytSystem.Controllers
                         book.AvailableCopies = Math.Max(0, book.AvailableCopies);
                         book.AvailableCopies = Math.Min(book.TotalCopies, book.AvailableCopies);
 
-                        // Update availability status
-                        book.IsAvailable = book.AvailableCopies > 0;
+                        // If no copies available, force unavailable
+                        // Otherwise respect what the Librarian chose (manual override allowed)
+                        if (book.AvailableCopies == 0)
+                            book.IsAvailable = false;
                     }
 
                     _context.Update(book);

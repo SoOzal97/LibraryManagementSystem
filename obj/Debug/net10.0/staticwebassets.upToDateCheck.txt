@@ -61,13 +61,23 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\uploads\08f7adaa-d14a-4c95-b42c-b809031d7cea.jpg
-wwwroot\uploads\303c9029-6975-42fa-be9d-6f560f1b4c41.jpg
 wwwroot\uploads\9843fd67-f51d-44d0-8c6a-1c54601e2773.jpg
-wwwroot\uploads\a56c27ef-9b99-4df4-bcdc-e2669b18b637.webp
-wwwroot\uploads\d267ec69-0ac6-4b60-a273-c1b4483f3974.jpg
-wwwroot\uploads\d713f873-e8a2-4ab1-8cbe-4623cb69ff35.jpg
 wwwroot\uploads\ff89407c-8f0b-44ee-a412-82ef6bc3b86d.jpg
+wwwroot\uploads\303c9029-6975-42fa-be9d-6f560f1b4c41.jpg
+wwwroot\uploads\08f7adaa-d14a-4c95-b42c-b809031d7cea.jpg
+wwwroot\uploads\a56c27ef-9b99-4df4-bcdc-e2669b18b637.webp
+wwwroot\uploads\d713f873-e8a2-4ab1-8cbe-4623cb69ff35.jpg
+wwwroot\uploads\d267ec69-0ac6-4b60-a273-c1b4483f3974.jpg
+wwwroot\uploads\9ed2224e-8747-4479-bcc1-31a480b4be3e.jpg
+wwwroot\uploads\6e01bf3d-350a-4b45-b7cb-4a82057f04f7.jpg
+wwwroot\uploads\91bab3aa-5789-409e-8cac-02f752e111e9.jpg
+wwwroot\uploads\35321631-273a-40e5-89dc-cf7b71a3023d.jpg
+wwwroot\uploads\2d033704-7cbc-45f0-90ee-b268bda5c6af.jpg
+wwwroot\uploads\12b0c457-479a-4e43-917e-eaf0bcbfaffe.jpg
+wwwroot\uploads\3959b99e-09bf-473e-803d-73c0592735b4.jpg
+wwwroot\uploads\b47c6a2d-1c4b-4405-b151-82675ce62136.jpg
+wwwroot\uploads\7df83371-c616-4dbb-9640-8a778c849cb0.jpg
+wwwroot\uploads\1683545c-03e5-4a21-9cd2-186a20bf3dbd.jpg
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\css\site.css
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\favicon.ico
 C:\Users\Admin\OneDrive\Desktop\Web Application\LibraryManagemenytSystem\LibraryManagemenytSystem\wwwroot\js\site.js

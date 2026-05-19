@@ -40,11 +40,14 @@ namespace LibraryManagemenytSystem.Models
         [Display(Name = "Date Added")]
         [DataType(DataType.Date)]
         public DateTime DateAdded { get; set; } = DateTime.Now;
+
         [Display(Name = "Total Copies")]
-        [Range(1, 10, ErrorMessage = "Total copies must be between 1 and 10.")]
+        [Range(0, 10, ErrorMessage = "Total copies must be between 0 and 10.")]
         public int TotalCopies { get; set; } = 1;
 
         [Display(Name = "Available Copies")]
         public int AvailableCopies { get; set; } = 1;
+
+
     }
 }
